@@ -1,4 +1,4 @@
-import { Answer } from "../entities/answer";
+import { Answer } from '../entities/answer';
 
 import type { AnswersRepository } from "../repositories/answers-repositoriy";
 
@@ -16,7 +16,6 @@ export class AnswerQuestionsUseCase {
 		content,
 	}: AnswerQuestionsUseCaseRequest) {
 		const answer = new Answer({ content, authorId: instructorId, questionId });
-
 		await this.answersRepository.create(answer);
 
 		return answer;
