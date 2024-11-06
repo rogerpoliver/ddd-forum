@@ -1,29 +1,16 @@
-import { Entity } from '../../core/entities/entity';
+import { Entity } from "../../core/entities/entity.ts";
+import { UniqueEntityID } from "../../core/entities/unique-entity-id.ts";
 
-import type { UniqueEntityID } from "../../core/entities/unique-entity-id";
-import type { Slug } from "./value-objects/slug";
-
-interface QuestionProps {
-	authorId: UniqueEntityID;
-	title: string;
-	slug: Slug;
-	content: string;
+interface InstructorProps {
+  name: string;
 }
 
-export class Question extends Entity<QuestionProps> {
-	get title() {
-		return this.props.title;
-	}
-
-	get slug() {
-		return this.props.slug;
-	}
-
-	get content() {
-		return this.props.content;
-	}
-
-	get authorId() {
-		return this.props.authorId;
-	}
+export class Instructor extends Entity<InstructorProps> {
+  static create(
+    props: InstructorProps,
+    id?: UniqueEntityID,
+  ) {
+    const instructor = new Instructor(props, id);
+    return instructor;
+  }
 }
