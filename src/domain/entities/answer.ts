@@ -49,8 +49,8 @@ export class Answer extends Entity<AnswerProps> {
     this.props.updatedAt = value;
   }
 
-  isNew() {
-    return dayjs().diff(this.props.createdAt, 'day') <= 3;
+  get isNew() {
+    return dayjs().diff(this.props.createdAt, "day") <= 3;
   }
 
   static create(
