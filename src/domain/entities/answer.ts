@@ -17,16 +17,8 @@ export class Answer extends Entity<AnswerProps> {
     return this.props.authorId;
   }
 
-  set authorId(value: UniqueEntityID) {
-    this.props.authorId = value;
-  }
-
   get questionId() {
     return this.props.questionId;
-  }
-
-  set questionId(value: UniqueEntityID) {
-    this.props.questionId = value;
   }
 
   get content() {
@@ -35,6 +27,7 @@ export class Answer extends Entity<AnswerProps> {
 
   set content(value: string) {
     this.props.content = value;
+    this.touch();
   }
 
   get createdAt() {
@@ -45,12 +38,16 @@ export class Answer extends Entity<AnswerProps> {
     return this.props.updatedAt;
   }
 
-  set updatedAt(value: Date | undefined) {
-    this.props.updatedAt = value;
+  get execerpt() {
+    return this.content.substring(0, 20).trimEnd().concat("...");
   }
 
   get isNew() {
     return dayjs().diff(this.props.createdAt, "day") <= 3;
+  }
+
+  private touch() {
+    this.props.updatedAt = new Date();
   }
 
   static create(

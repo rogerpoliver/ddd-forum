@@ -2,10 +2,9 @@ import { dayjs } from '@xtool/dayjs';
 
 import { Entity } from '../../core/entities/entity.ts';
 import { Optional } from '../../core/types/optional.ts';
+import { Slug } from './value-objects/slug.ts';
 
 import type { UniqueEntityID } from "../../core/entities/unique-entity-id.ts";
-import type { Slug } from "./value-objects/slug.ts";
-
 interface QuestionProps {
   authorId: UniqueEntityID;
   bestAnswerId: UniqueEntityID;
@@ -21,16 +20,13 @@ export class Question extends Entity<QuestionProps> {
     return this.props.authorId;
   }
 
-  set authorId(value: UniqueEntityID) {
-    this.props.authorId = value;
-  }
-
   get bestAnswerId() {
     return this.props.bestAnswerId;
   }
 
   set bestAnswerId(value: UniqueEntityID) {
     this.props.bestAnswerId = value;
+    this.touch();
   }
 
   get title() {
@@ -39,6 +35,8 @@ export class Question extends Entity<QuestionProps> {
 
   set title(value: string) {
     this.props.title = value;
+    this.props.slug = Slug.createFromText(value);
+    this.touch();
   }
 
   get slug() {
@@ -47,6 +45,7 @@ export class Question extends Entity<QuestionProps> {
 
   set slug(value: Slug) {
     this.props.slug = value;
+    this.touch();
   }
 
   get content() {
@@ -55,6 +54,7 @@ export class Question extends Entity<QuestionProps> {
 
   set content(value: string) {
     this.props.content = value;
+    this.touch();
   }
 
   get createdAt() {
@@ -65,21 +65,26 @@ export class Question extends Entity<QuestionProps> {
     return this.props.updatedAt;
   }
 
-  set updatedAt(value: Date | undefined) {
-    this.props.updatedAt = value;
-  }
-
   get isNew() {
     return dayjs().diff(this.props.createdAt, "day") <= 3;
   }
 
+  get execerpt() {
+    return this.content.substring(0, 20).trimEnd().concat("...");
+  }
+
+  private touch() {
+    this.props.updatedAt = new Date();
+  }
+
   static create(
-    props: Optional<QuestionProps, "createdAt">,
+    props: Optional<QuestionProps, "createdAt" | "slug">,
     id?: UniqueEntityID,
   ) {
     const question = new Question({
       ...props,
       createdAt: new Date(),
+      slug: props.slug ?? Slug.createFromText(props.title),
     }, id);
     return question;
   }
