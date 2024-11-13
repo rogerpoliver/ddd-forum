@@ -1,9 +1,9 @@
 import { dayjs } from '@xtool/dayjs';
 
-import { Entity } from '../../core/entities/entity.ts';
-import { Optional } from '../../core/types/optional.ts';
+import { Entity } from '../../../../core/entities/entity.ts';
+import { Optional } from '../../../../core/types/optional.ts';
 
-import type { UniqueEntityID } from "../../core/entities/unique-entity-id.ts";
+import type { UniqueEntityID } from "../../../../core/entities/unique-entity-id.ts";
 interface AnswerProps {
   authorId: UniqueEntityID;
   questionId: UniqueEntityID;

@@ -1,5 +1,5 @@
-import { UniqueEntityID } from "../../core/entities/unique-entity-id.ts";
-import { Answer } from "../entities/answer.ts";
+import { UniqueEntityID } from '../../../../core/entities/unique-entity-id.ts';
+import { Answer } from '../../enterprise/entities/answer.ts';
 
 import type { AnswersRepository } from "../repositories/answers-repositoriy.ts";
 

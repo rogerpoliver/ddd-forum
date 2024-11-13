@@ -1,8 +1,8 @@
-import { assertEquals } from "@std/assert";
+import { assertEquals } from '@std/assert';
 
-import { AnswerQuestionsUseCase } from "./answer-question.ts";
+import { AnswerQuestionsUseCase } from './answer-question.ts';
 
-import type { Answer } from "../entities/answer.ts";
+import type { Answer } from "../../enterprise/entities/answer.ts";
 import type { AnswersRepository } from "../repositories/answers-repositoriy.ts";
 
 const fakeAnswersRepository: AnswersRepository = {

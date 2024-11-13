@@ -1,10 +1,10 @@
 import { dayjs } from '@xtool/dayjs';
 
-import { Entity } from '../../core/entities/entity.ts';
-import { Optional } from '../../core/types/optional.ts';
+import { Entity } from '../../../../core/entities/entity.ts';
+import { Optional } from '../../../../core/types/optional.ts';
 import { Slug } from './value-objects/slug.ts';
 
-import type { UniqueEntityID } from "../../core/entities/unique-entity-id.ts";
+import type { UniqueEntityID } from "../../../../core/entities/unique-entity-id.ts";
 interface QuestionProps {
   authorId: UniqueEntityID;
   bestAnswerId: UniqueEntityID;
