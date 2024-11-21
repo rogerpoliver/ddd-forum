@@ -5,7 +5,8 @@ import { Optional } from '../../../../core/types/optional.ts';
 import { Slug } from './value-objects/slug.ts';
 
 import type { UniqueEntityID } from "../../../../core/entities/unique-entity-id.ts";
-interface QuestionProps {
+
+export interface QuestionProps {
   authorId: UniqueEntityID;
   bestAnswerId: UniqueEntityID;
   title: string;
