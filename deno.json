@@ -7,6 +7,7 @@
     "@std/assert": "jsr:@std/assert",
     "@std/expect": "jsr:@std/expect",
     "@std/testing": "jsr:@std/testing",
-    "@xtool/dayjs": "jsr:@xtool/dayjs"
+    "@xtool/dayjs": "jsr:@xtool/dayjs",
+    "@faker-js/faker": "npm:@faker-js/faker"
   }
 }

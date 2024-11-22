@@ -12,6 +12,7 @@
     "jsr:@std/path@^1.0.8": "1.0.8",
     "jsr:@std/testing@*": "1.0.5",
     "jsr:@xtool/dayjs@*": "0.1.4",
+    "npm:@faker-js/faker@*": "9.2.0",
     "npm:@types/node@*": "22.5.4"
   },
   "jsr": {
@@ -62,6 +63,9 @@
     }
   },
   "npm": {
+    "@faker-js/faker@9.2.0": {
+      "integrity": "sha512-ulqQu4KMr1/sTFIYvqSdegHT8NIkt66tFAkugGnHA+1WAfEn6hMzNR+svjXGFRVLnapxvej67Z/LwchFrnLBUg=="
+    },
     "@types/node@22.5.4": {
       "integrity": "sha512-FDuKUJQm/ju9fT/SeX/6+gBzoPzlVCzfzmGkwKvRHQVxi4BntVbyIwf6a4Xn62mrvndLiml6z/UBXIdEVjQLXg==",
       "dependencies": [
@@ -77,7 +81,8 @@
       "jsr:@std/assert@*",
       "jsr:@std/expect@*",
       "jsr:@std/testing@*",
-      "jsr:@xtool/dayjs@*"
+      "jsr:@xtool/dayjs@*",
+      "npm:@faker-js/faker@*"
     ]
   }
 }
