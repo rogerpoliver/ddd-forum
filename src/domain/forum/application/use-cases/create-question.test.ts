@@ -6,7 +6,9 @@ import { CreateQuestionUseCase } from './create-question.ts';
 
 const fakeQuestionsRepository: QuestionsRepository = {
     create: async (_question: Question) => {},
+    delete: async (_question: Question) => {},
     findBySlug: async (_slug: string) => null,
+    findById: async (_id: string) => null,
 };
 
 Deno.test("create a question", async () => {
