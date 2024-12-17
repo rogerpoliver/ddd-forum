@@ -1,25 +1,32 @@
-import { assertEquals } from '@std/assert';
+import { expect } from '@std/expect/expect';
+import { beforeEach, describe, it } from '@std/testing/bdd';
 
-import { AnswerQuestionsUseCase } from './answer-question.ts';
+import {
+    InMemoryQuestionsRepository
+} from '../../../../../test/repositories/in-memory-questions-repository.ts';
+import { CreateQuestionUseCase } from './create-question.ts';
 
-import type { Answer } from "../../enterprise/entities/answer.ts";
-import type { AnswersRepository } from "../repositories/answers-repositoriy.ts";
+let inMemoryQuestionsRepository: InMemoryQuestionsRepository;
+let sut: CreateQuestionUseCase;
 
-const fakeAnswersRepository: AnswersRepository = {
-  // deno-lint-ignore require-await
-  create: async (_answer: Answer) => {
-    return;
-  },
-};
-
-Deno.test("create an answer", async () => {
-  const answerQuestion = new AnswerQuestionsUseCase(fakeAnswersRepository);
-
-  const answer = await answerQuestion.execute({
-    questionId: "1",
-    instructorId: "1",
-    content: "New Answer",
+describe("Create Question", () => {
+  beforeEach(() => {
+    inMemoryQuestionsRepository = new InMemoryQuestionsRepository();
+    sut = new CreateQuestionUseCase(inMemoryQuestionsRepository);
   });
 
-  assertEquals(answer.content, "New Answer");
+  it("should be able to create a question", async () => {
+    const result = await sut.execute({
+      authorId: "1",
+      title: "New question",
+      content: "Question content",
+    });
+
+    expect(result.question.authorId.toString()).toEqual("1");
+    expect(result.question.title).toEqual("New question");
+    expect(result.question.content).toEqual("Question content");
+    expect(inMemoryQuestionsRepository.items[0]).toEqual(
+      result.question,
+    );
+  });
 });

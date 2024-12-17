@@ -8,7 +8,6 @@ export class InMemoryQuestionsRepository implements QuestionsRepository {
 
     create(question: Question): Promise<void> {
         this.items.push(question);
-
         return Promise.resolve();
     }
 
@@ -18,7 +17,6 @@ export class InMemoryQuestionsRepository implements QuestionsRepository {
         );
 
         this.items.splice(itemIndex, 1);
-
         return Promise.resolve();
     }
 
