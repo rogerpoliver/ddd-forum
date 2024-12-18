@@ -9,14 +9,15 @@ const fakeQuestionsRepository: QuestionsRepository = {
     delete: async (_question: Question) => {},
     findBySlug: async (_slug: string) => null,
     findById: async (_id: string) => null,
+    save: async (_question: Question) => {},
 };
 
 Deno.test("create a question", async () => {
     const createQuestion = new CreateQuestionUseCase(fakeQuestionsRepository);
     const { question } = await createQuestion.execute({
         authorId: "1",
-        title: "Nova pergunta",
-        content: "Conteúdo da pergunta",
+        title: "New Question",
+        content: "Questions content",
     });
 
     assert(question.id);
