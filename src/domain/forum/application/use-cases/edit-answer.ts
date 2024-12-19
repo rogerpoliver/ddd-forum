@@ -1,3 +1,4 @@
+import { Answer } from "../../enterprise/entities/answer.ts";
 import { AnswersRepository } from "../repositories/answers-repository.ts";
 
 interface EditAnswerUseCaseRequest {
@@ -6,12 +7,16 @@ interface EditAnswerUseCaseRequest {
     content: string;
 }
 
+interface EditAnswerCaseRequest {
+    answer: Answer;
+}
+
 export class EditAnswerUseCase {
     constructor(private answersRepository: AnswersRepository) {}
 
     async execute(
         { authorId, answerId, content }: EditAnswerUseCaseRequest,
-    ) {
+    ): Promise<EditAnswerCaseRequest> {
         const answer = await this.answersRepository.findById(answerId);
 
         if (!answer) {
@@ -25,6 +30,6 @@ export class EditAnswerUseCase {
         answer.content = content;
 
         await this.answersRepository.save(answer);
-        return {};
+        return { answer };
     }
 }
