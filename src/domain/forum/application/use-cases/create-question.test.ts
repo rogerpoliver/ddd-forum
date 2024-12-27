@@ -1,5 +1,6 @@
 import { assert } from '@std/assert/assert';
 
+import { PaginationParams } from '../../../../core/repositories/pagination-params.ts';
 import { Question } from '../../enterprise/entities/question.ts';
 import { QuestionsRepository } from '../repositories/questions-repository.ts';
 import { CreateQuestionUseCase } from './create-question.ts';
@@ -9,6 +10,9 @@ const fakeQuestionsRepository: QuestionsRepository = {
     delete: async (_question: Question) => {},
     findBySlug: async (_slug: string) => null,
     findById: async (_id: string) => null,
+    findManyRecent: async (_params: PaginationParams) => {
+        return [];
+    },
     save: async (_question: Question) => {},
 };
 
