@@ -1,7 +1,9 @@
+import { PaginationParams } from "../../src/core/repositories/pagination-params.ts";
 import {
   AnswersRepository,
 } from "../../src/domain/forum/application/repositories/answers-repository.ts";
 import { Answer } from "../../src/domain/forum/enterprise/entities/answer.ts";
+import { Question } from "../../src/domain/forum/enterprise/entities/question.ts";
 
 export class InMemoryAnswersRepository implements AnswersRepository {
   public items: Answer[] = [];
@@ -26,6 +28,17 @@ export class InMemoryAnswersRepository implements AnswersRepository {
     }
 
     return Promise.resolve(answer);
+  }
+
+  findManyByQuestionId(
+    questionId: string,
+    { page }: PaginationParams,
+  ): Promise<Answer[]> {
+    const answers = this.items
+      .filter((items) => items.questionId.toString() === questionId)
+      .slice((page - 1) * 20, page * 20);
+
+    return Promise.resolve(answers);
   }
 
   save(answer: Answer): Promise<void> {
