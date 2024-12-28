@@ -1,28 +1,31 @@
-import { assert } from '@std/assert/assert';
+import { expect } from "@std/expect/expect";
+import { beforeEach, describe, it } from "@std/testing/bdd";
 
-import { PaginationParams } from '../../../../core/repositories/pagination-params.ts';
-import { Question } from '../../enterprise/entities/question.ts';
-import { QuestionsRepository } from '../repositories/questions-repository.ts';
-import { CreateQuestionUseCase } from './create-question.ts';
+import {
+    InMemoryQuestionsRepository,
+} from "../../../../../test/repositories/in-memory-questions-repository.ts";
+import { UniqueEntityID } from "../../../../core/entities/unique-entity-id.ts";
+import { CreateQuestionUseCase } from "./create-question.ts";
 
-const fakeQuestionsRepository: QuestionsRepository = {
-    create: async (_question: Question) => {},
-    delete: async (_question: Question) => {},
-    findBySlug: async (_slug: string) => null,
-    findById: async (_id: string) => null,
-    findManyRecent: async (_params: PaginationParams) => {
-        return [];
-    },
-    save: async (_question: Question) => {},
-};
+let inMemoryQuestionsRepository: InMemoryQuestionsRepository;
+let sut: CreateQuestionUseCase;
 
-Deno.test("create a question", async () => {
-    const createQuestion = new CreateQuestionUseCase(fakeQuestionsRepository);
-    const { question } = await createQuestion.execute({
-        authorId: "1",
-        title: "New Question",
-        content: "Questions content",
+describe("Create Question", () => {
+    beforeEach(() => {
+        inMemoryQuestionsRepository = new InMemoryQuestionsRepository();
+        sut = new CreateQuestionUseCase(inMemoryQuestionsRepository);
     });
 
-    assert(question.id);
+    it("should be able to create a question", async () => {
+        await sut.execute({
+            authorId: new UniqueEntityID("question-1").toString(),
+            title: "new title",
+            content: "some content",
+        });
+
+        const createdQuestion = inMemoryQuestionsRepository.items[0];
+        expect(createdQuestion.authorId.toString()).toEqual("question-1");
+        expect(createdQuestion.title).toEqual("new title");
+        expect(createdQuestion.content).toEqual("some content");
+    });
 });
