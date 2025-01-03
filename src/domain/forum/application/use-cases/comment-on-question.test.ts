@@ -2,7 +2,6 @@ import { faker } from '@faker-js/faker';
 import { expect } from '@std/expect/expect';
 import { beforeEach, describe, it } from '@std/testing/bdd';
 
-import { makeQuestionComment } from '../../../../../test/factories/make-question-comment.ts';
 import { makeQuestion } from '../../../../../test/factories/make-question.ts';
 import {
     InMemoryQuestionCommentRepository
