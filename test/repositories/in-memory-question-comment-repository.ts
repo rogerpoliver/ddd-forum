@@ -1,3 +1,4 @@
+import { PaginationParams } from '../../src/core/repositories/pagination-params.ts';
 import {
     QuestionCommentRepository
 } from '../../src/domain/forum/application/repositories/question-comments-repository.ts';
@@ -31,5 +32,16 @@ export class InMemoryQuestionCommentRepository
         }
 
         return Promise.resolve(questionComment);
+    }
+
+    findManyByQuestionId(
+        questionId: string,
+        { page }: PaginationParams,
+    ): Promise<QuestionComment[]> {
+        const questionsComments = this.items
+            .filter((items) => items.questionId.toString() === questionId)
+            .slice((page - 1) * 20, page * 20);
+
+        return Promise.resolve(questionsComments);
     }
 }

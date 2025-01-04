@@ -1,5 +1,5 @@
-import { Answer } from "../../enterprise/entities/answer.ts";
-import { AnswersRepository } from "../repositories/answers-repository.ts";
+import { Answer } from '../../enterprise/entities/answer.ts';
+import { AnswersRepository } from '../repositories/answers-repository.ts';
 
 interface FetchQuestionsAnswersUseCaseRequest {
     questionId: string;
@@ -23,14 +23,6 @@ export class FetchQuestionsAnswersUseCase {
                 page,
             },
         );
-
-        // const question = await this.questionsRepository.findById(
-        //     answers[0].questionId.toString(),
-        // );
-
-        // if (!question) {
-        //     throw new Error("Question not found");
-        // }
 
         return {
             answers,
