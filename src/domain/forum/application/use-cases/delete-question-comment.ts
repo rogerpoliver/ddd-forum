@@ -1,4 +1,4 @@
-import { QuestionCommentRepository } from '../repositories/question-comments-repository.ts';
+import { QuestionsCommentsRepository } from '../repositories/questions-comments-repository.ts';
 
 interface DeleteQuestionCommentUseCaseRequest {
     authorId: string;
@@ -6,12 +6,14 @@ interface DeleteQuestionCommentUseCaseRequest {
 }
 
 export class DeleteQuestionCommentUseCase {
-    constructor(private questionCommentRepository: QuestionCommentRepository) {}
+    constructor(
+        private questionsCommentsRepository: QuestionsCommentsRepository,
+    ) {}
 
     async execute(
         { authorId, questionCommentId }: DeleteQuestionCommentUseCaseRequest,
     ) {
-        const questionComment = await this.questionCommentRepository.findById(
+        const questionComment = await this.questionsCommentsRepository.findById(
             questionCommentId,
         );
 
@@ -23,7 +25,7 @@ export class DeleteQuestionCommentUseCase {
             throw new Deno.errors.PermissionDenied();
         }
 
-        await this.questionCommentRepository.delete(questionComment);
+        await this.questionsCommentsRepository.delete(questionComment);
         return {};
     }
 }

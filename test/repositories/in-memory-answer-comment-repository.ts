@@ -1,11 +1,11 @@
 import { PaginationParams } from '../../src/core/repositories/pagination-params.ts';
 import {
-    AnswerCommentRepository
-} from '../../src/domain/forum/application/repositories/answer-comments-repository.ts';
+    AnswersCommentsRepository
+} from '../../src/domain/forum/application/repositories/answers-comments-repository.ts';
 import { AnswerComment } from '../../src/domain/forum/enterprise/entities/answer-comment.ts';
 
 export class InMemoryAnswerCommentRepository
-    implements AnswerCommentRepository {
+    implements AnswersCommentsRepository {
     public items: AnswerComment[] = [];
 
     create(answerComment: AnswerComment): Promise<void> {

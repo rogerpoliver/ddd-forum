@@ -1,5 +1,5 @@
 import { AnswerComment } from '../../enterprise/entities/answer-comment.ts';
-import { AnswerCommentRepository } from '../repositories/answer-comments-repository.ts';
+import { AnswersCommentsRepository } from '../repositories/answers-comments-repository.ts';
 
 interface FetchAnswersCommentsUseCaseRequest {
     answerId: string;
@@ -12,12 +12,12 @@ interface FetchAnswersCommentsUseCaseResponse {
 
 export class FetchAnswersCommentsUseCase {
     constructor(
-        private answersCommentRepository: AnswerCommentRepository,
+        private answersCommentsRepository: AnswersCommentsRepository,
     ) {}
     async execute(
         { answerId, page }: FetchAnswersCommentsUseCaseRequest,
     ): Promise<FetchAnswersCommentsUseCaseResponse> {
-        const answersComments = await this.answersCommentRepository
+        const answersComments = await this.answersCommentsRepository
             .findManyByAnswerId(
                 answerId,
                 {

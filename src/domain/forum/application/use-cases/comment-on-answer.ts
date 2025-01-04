@@ -1,6 +1,6 @@
 import { UniqueEntityID } from '../../../../core/entities/unique-entity-id.ts';
 import { AnswerComment } from '../../enterprise/entities/answer-comment.ts';
-import { AnswerCommentRepository } from '../repositories/answer-comments-repository.ts';
+import { AnswersCommentsRepository } from '../repositories/answers-comments-repository.ts';
 import { AnswersRepository } from '../repositories/answers-repository.ts';
 
 interface CommentOnAnswerUseCaseRequest {
@@ -16,7 +16,7 @@ interface CommentOnAnswerUseCaseResponse {
 export class CommentOnAnswerUseCase {
     constructor(
         private answersRepository: AnswersRepository,
-        private answerCommentRepository: AnswerCommentRepository,
+        private answersCommentsRepository: AnswersCommentsRepository,
     ) {}
 
     async execute(
@@ -34,7 +34,7 @@ export class CommentOnAnswerUseCase {
             content,
         });
 
-        await this.answerCommentRepository.create(
+        await this.answersCommentsRepository.create(
             answerComment,
         );
 
