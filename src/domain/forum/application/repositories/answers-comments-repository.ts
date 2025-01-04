@@ -1,12 +1,12 @@
 import { PaginationParams } from '../../../../core/repositories/pagination-params.ts';
-import { AnswerComment } from '../../enterprise/entities/answer-comment.ts';
+import { AnswersComment } from '../../enterprise/entities/answer-comment.ts';
 
 export interface AnswersCommentsRepository {
-    create(answerComment: AnswerComment): Promise<void>;
-    delete(answerComment: AnswerComment): Promise<void>;
-    findById(id: string): Promise<AnswerComment | null>;
+    create(answersComment: AnswersComment): Promise<void>;
+    delete(answersComment: AnswersComment): Promise<void>;
+    findById(id: string): Promise<AnswersComment | null>;
     findManyByAnswerId(
         questionId: string,
         params: PaginationParams,
-    ): Promise<AnswerComment[]>;
+    ): Promise<AnswersComment[]>;
 }

@@ -4,27 +4,27 @@ import { beforeEach, describe, it } from '@std/testing/bdd';
 
 import { makeQuestion } from '../../../../../test/factories/make-question.ts';
 import {
-    InMemoryQuestionCommentRepository
-} from '../../../../../test/repositories/in-memory-question-comment-repository.ts';
+    InMemoryQuestionsCommentsRepository
+} from '../../../../../test/repositories/in-memory-questions-comments-repository.ts';
 import {
     InMemoryQuestionsRepository
 } from '../../../../../test/repositories/in-memory-questions-repository.ts';
 import { UniqueEntityID } from '../../../../core/entities/unique-entity-id.ts';
 import { CommentOnQuestionUseCase } from './comment-on-question.ts';
 
-let inMemoryQuestionCommentRepository: InMemoryQuestionCommentRepository;
+let inMemoryQuestionsCommentsRepository: InMemoryQuestionsCommentsRepository;
 let inMemoryQuestionsRepository: InMemoryQuestionsRepository;
 let sut: CommentOnQuestionUseCase;
 
 describe("Create Question Comment", () => {
     beforeEach(() => {
         inMemoryQuestionsRepository = new InMemoryQuestionsRepository();
-        inMemoryQuestionCommentRepository =
-            new InMemoryQuestionCommentRepository();
+        inMemoryQuestionsCommentsRepository =
+            new InMemoryQuestionsCommentsRepository();
 
         sut = new CommentOnQuestionUseCase(
             inMemoryQuestionsRepository,
-            inMemoryQuestionCommentRepository,
+            inMemoryQuestionsCommentsRepository,
         );
     });
 
@@ -44,12 +44,12 @@ describe("Create Question Comment", () => {
             content: faker.lorem.text(),
         });
 
-        const questionComments = inMemoryQuestionCommentRepository.items;
+        const questionComments = inMemoryQuestionsCommentsRepository.items;
 
         expect(questionComments[0].authorId.toString()).toEqual("author-1");
         expect(questionComments[0].questionId.toString()).toEqual("question-1");
         expect(questionComments[0].content).toEqual(
-            result.questionComment.content,
+            result.questionsComment.content,
         );
     });
 });

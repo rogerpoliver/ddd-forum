@@ -1,5 +1,5 @@
 import { UniqueEntityID } from '../../../../core/entities/unique-entity-id.ts';
-import { AnswerComment } from '../../enterprise/entities/answer-comment.ts';
+import { AnswersComment } from '../../enterprise/entities/answer-comment.ts';
 import { AnswersCommentsRepository } from '../repositories/answers-comments-repository.ts';
 import { AnswersRepository } from '../repositories/answers-repository.ts';
 
@@ -10,7 +10,7 @@ interface CommentOnAnswerUseCaseRequest {
 }
 
 interface CommentOnAnswerUseCaseResponse {
-    answerComment: AnswerComment;
+    answersComment: AnswersComment;
 }
 
 export class CommentOnAnswerUseCase {
@@ -28,18 +28,18 @@ export class CommentOnAnswerUseCase {
             throw new Error("Answer not found.");
         }
 
-        const answerComment = AnswerComment.create({
+        const answersComment = AnswersComment.create({
             authorId: new UniqueEntityID(authorId),
             answerId: new UniqueEntityID(answerId),
             content,
         });
 
         await this.answersCommentsRepository.create(
-            answerComment,
+            answersComment,
         );
 
         return {
-            answerComment,
+            answersComment,
         };
     }
 }

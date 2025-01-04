@@ -3,18 +3,18 @@ import { beforeEach, describe, it } from '@std/testing/bdd';
 
 import { makeAnswerComment } from '../../../../../test/factories/make-answer-comment.ts';
 import {
-    InMemoryAnswerCommentRepository
-} from '../../../../../test/repositories/in-memory-answer-comment-repository.ts';
+    InMemoryAnswersCommentsRepository
+} from '../../../../../test/repositories/in-memory-answers-comments-repository.ts';
 import { UniqueEntityID } from '../../../../core/entities/unique-entity-id.ts';
 import { FetchAnswersCommentsUseCase } from './fetch-answers-comments.ts';
 
-let inMemoryAnswerCommentsRepository: InMemoryAnswerCommentRepository;
+let inMemoryAnswerCommentsRepository: InMemoryAnswersCommentsRepository;
 let sut: FetchAnswersCommentsUseCase;
 
 describe("Fetch answersComments", () => {
     beforeEach(() => {
         inMemoryAnswerCommentsRepository =
-            new InMemoryAnswerCommentRepository();
+            new InMemoryAnswersCommentsRepository();
         sut = new FetchAnswersCommentsUseCase(
             inMemoryAnswerCommentsRepository,
         );

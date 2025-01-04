@@ -13,19 +13,20 @@ export class DeleteQuestionCommentUseCase {
     async execute(
         { authorId, questionCommentId }: DeleteQuestionCommentUseCaseRequest,
     ) {
-        const questionComment = await this.questionsCommentsRepository.findById(
-            questionCommentId,
-        );
+        const questionsComment = await this.questionsCommentsRepository
+            .findById(
+                questionCommentId,
+            );
 
-        if (!questionComment) {
+        if (!questionsComment) {
             throw new Error("Question comment not found.");
         }
 
-        if (authorId !== questionComment.authorId.toString()) {
+        if (authorId !== questionsComment.authorId.toString()) {
             throw new Deno.errors.PermissionDenied();
         }
 
-        await this.questionsCommentsRepository.delete(questionComment);
+        await this.questionsCommentsRepository.delete(questionsComment);
         return {};
     }
 }

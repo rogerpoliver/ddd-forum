@@ -11,19 +11,19 @@ export class DeleteAnswerCommentUseCase {
     async execute(
         { authorId, answerCommentId }: DeleteAnswerCommentUseCaseRequest,
     ) {
-        const answerComment = await this.answersCommentsRepository.findById(
+        const answersComment = await this.answersCommentsRepository.findById(
             answerCommentId,
         );
 
-        if (!answerComment) {
+        if (!answersComment) {
             throw new Error("Answer comment not found.");
         }
 
-        if (authorId !== answerComment.authorId.toString()) {
+        if (authorId !== answersComment.authorId.toString()) {
             throw new Deno.errors.PermissionDenied();
         }
 
-        await this.answersCommentsRepository.delete(answerComment);
+        await this.answersCommentsRepository.delete(answersComment);
         return {};
     }
 }

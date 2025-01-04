@@ -2,42 +2,42 @@ import { PaginationParams } from '../../src/core/repositories/pagination-params.
 import {
     AnswersCommentsRepository
 } from '../../src/domain/forum/application/repositories/answers-comments-repository.ts';
-import { AnswerComment } from '../../src/domain/forum/enterprise/entities/answer-comment.ts';
+import { AnswersComment } from '../../src/domain/forum/enterprise/entities/answer-comment.ts';
 
-export class InMemoryAnswerCommentRepository
+export class InMemoryAnswersCommentsRepository
     implements AnswersCommentsRepository {
-    public items: AnswerComment[] = [];
+    public items: AnswersComment[] = [];
 
-    create(answerComment: AnswerComment): Promise<void> {
-        this.items.push(answerComment);
+    create(answersComment: AnswersComment): Promise<void> {
+        this.items.push(answersComment);
         return Promise.resolve();
     }
 
-    delete(answerComment: AnswerComment): Promise<void> {
+    delete(answersComment: AnswersComment): Promise<void> {
         const itemIndex = this.items.findIndex((item) =>
-            item.id == answerComment.id
+            item.id == answersComment.id
         );
 
         this.items.splice(itemIndex, 1);
         return Promise.resolve();
     }
 
-    findById(id: string): Promise<AnswerComment | null> {
-        const answerComment = this.items.find((item) =>
+    findById(id: string): Promise<AnswersComment | null> {
+        const answersComment = this.items.find((item) =>
             item.id.toString() === id
         );
 
-        if (!answerComment) {
+        if (!answersComment) {
             return Promise.resolve(null);
         }
 
-        return Promise.resolve(answerComment);
+        return Promise.resolve(answersComment);
     }
 
     findManyByAnswerId(
         answerId: string,
         { page }: PaginationParams,
-    ): Promise<AnswerComment[]> {
+    ): Promise<AnswersComment[]> {
         const answersComments = this.items
             .filter((items) => items.answerId.toString() === answerId)
             .slice((page - 1) * 20, page * 20);

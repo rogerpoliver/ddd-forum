@@ -2,19 +2,19 @@ import { faker } from '@faker-js/faker';
 
 import { UniqueEntityID } from '../../src/core/entities/unique-entity-id.ts';
 import {
-    AnswerComment, AnswerCommentProps
+    AnswerCommentProps, AnswersComment
 } from '../../src/domain/forum/enterprise/entities/answer-comment.ts';
 
 export function makeAnswerComment(
     override: Partial<AnswerCommentProps> = {},
     id?: UniqueEntityID,
 ) {
-    const answerComment = AnswerComment.create({
+    const answersComment = AnswersComment.create({
         authorId: new UniqueEntityID(),
         answerId: new UniqueEntityID(),
         content: faker.lorem.text(),
         ...override,
     }, id);
 
-    return answerComment;
+    return answersComment;
 }

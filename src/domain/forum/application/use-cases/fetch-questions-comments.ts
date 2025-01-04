@@ -1,4 +1,4 @@
-import { QuestionComment } from '../../enterprise/entities/question-comment.ts';
+import { QuestionsComment } from '../../enterprise/entities/question-comment.ts';
 import { QuestionsCommentsRepository } from '../repositories/questions-comments-repository.ts';
 
 interface FetchQuestionsCommentsUseCaseRequest {
@@ -7,7 +7,7 @@ interface FetchQuestionsCommentsUseCaseRequest {
 }
 
 interface FetchQuestionsCommentsUseCaseResponse {
-    questionsComments: QuestionComment[];
+    questionsComments: QuestionsComment[];
 }
 
 export class FetchQuestionsCommentsUseCase {

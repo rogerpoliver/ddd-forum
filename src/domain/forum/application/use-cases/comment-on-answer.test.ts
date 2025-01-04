@@ -4,26 +4,27 @@ import { beforeEach, describe, it } from '@std/testing/bdd';
 
 import { makeAnswer } from '../../../../../test/factories/make-answer.ts';
 import {
-    InMemoryAnswerCommentRepository
-} from '../../../../../test/repositories/in-memory-answer-comment-repository.ts';
+    InMemoryAnswersCommentsRepository
+} from '../../../../../test/repositories/in-memory-answers-comments-repository.ts';
 import {
     InMemoryAnswersRepository
 } from '../../../../../test/repositories/in-memory-answers-repository.ts';
 import { UniqueEntityID } from '../../../../core/entities/unique-entity-id.ts';
 import { CommentOnAnswerUseCase } from './comment-on-answer.ts';
 
-let inMemoryAnswerCommentRepository: InMemoryAnswerCommentRepository;
+let inMemoryAnswersCommentsRepository: InMemoryAnswersCommentsRepository;
 let inMemoryAnswersRepository: InMemoryAnswersRepository;
 let sut: CommentOnAnswerUseCase;
 
 describe("Create Answer Comment", () => {
     beforeEach(() => {
         inMemoryAnswersRepository = new InMemoryAnswersRepository();
-        inMemoryAnswerCommentRepository = new InMemoryAnswerCommentRepository();
+        inMemoryAnswersCommentsRepository =
+            new InMemoryAnswersCommentsRepository();
 
         sut = new CommentOnAnswerUseCase(
             inMemoryAnswersRepository,
-            inMemoryAnswerCommentRepository,
+            inMemoryAnswersCommentsRepository,
         );
     });
 
@@ -43,12 +44,12 @@ describe("Create Answer Comment", () => {
             content: faker.lorem.text(),
         });
 
-        const answerComments = inMemoryAnswerCommentRepository.items;
+        const answerComments = inMemoryAnswersCommentsRepository.items;
 
         expect(answerComments[0].authorId.toString()).toEqual("author-1");
         expect(answerComments[0].answerId.toString()).toEqual("answer-1");
         expect(answerComments[0].content).toEqual(
-            result.answerComment.content,
+            result.answersComment.content,
         );
     });
 });
