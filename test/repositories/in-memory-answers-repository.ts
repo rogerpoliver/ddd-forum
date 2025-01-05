@@ -1,9 +1,8 @@
-import { PaginationParams } from "../../src/core/repositories/pagination-params.ts";
+import { PaginationParams } from '../../src/core/repositories/pagination-params.ts';
 import {
-  AnswersRepository,
-} from "../../src/domain/forum/application/repositories/answers-repository.ts";
-import { Answer } from "../../src/domain/forum/enterprise/entities/answer.ts";
-import { Question } from "../../src/domain/forum/enterprise/entities/question.ts";
+    AnswersRepository
+} from '../../src/domain/forum/application/repositories/answers-repository.ts';
+import { Answer } from '../../src/domain/forum/enterprise/entities/answer.ts';
 
 export class InMemoryAnswersRepository implements AnswersRepository {
   public items: Answer[] = [];
