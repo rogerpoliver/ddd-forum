@@ -5,6 +5,7 @@ export class Left<L> {
         this.value = value;
     }
 }
+
 // Success
 export class Right<R> {
     readonly value: R;
@@ -12,10 +13,13 @@ export class Right<R> {
         this.value = value;
     }
 }
+
 export type Either<L, R> = Left<L> | Right<R>;
+
 export const left = <L, R>(value: L): Either<L, R> => {
     return new Left(value);
 };
+
 export const right = <L, R>(value: R): Either<L, R> => {
     return new Right(value);
 };
