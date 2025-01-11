@@ -1,6 +1,9 @@
-import { Question } from "../../enterprise/entities/question.ts";
-import { AnswersRepository } from "../repositories/answers-repository.ts";
-import { QuestionsRepository } from "../repositories/questions-repository.ts";
+import { Either, left, right } from '../../../../core/either.ts';
+import { Question } from '../../enterprise/entities/question.ts';
+import { AnswersRepository } from '../repositories/answers-repository.ts';
+import { QuestionsRepository } from '../repositories/questions-repository.ts';
+import { NotAllowedError } from './errors/not-allowed-error.ts';
+import { ResourceNotFoundError } from './errors/resource-not-found-error.ts';
 
 interface ChooseQuestionsBestAnswerUseCaseRequest {
     authorId: string;
@@ -8,9 +11,12 @@ interface ChooseQuestionsBestAnswerUseCaseRequest {
     questionId: string;
 }
 
-interface ChooseQuestionsBestAnswerUseCaseResponse {
-    question: Question;
-}
+type ChooseQuestionsBestAnswerUseCaseResponse = Either<
+    ResourceNotFoundError | NotAllowedError,
+    {
+        question: Question;
+    }
+>;
 
 export class ChooseQuestionsBestAnswerUseCase {
     constructor(
@@ -23,7 +29,7 @@ export class ChooseQuestionsBestAnswerUseCase {
         const answer = await this.answersRepository.findById(answerId);
 
         if (!answer) {
-            throw new Error("Answer not found");
+            return left(new NotAllowedError());
         }
 
         const question = await this.questionsRepository.findById(
@@ -31,19 +37,17 @@ export class ChooseQuestionsBestAnswerUseCase {
         );
 
         if (!question) {
-            throw new Error("Question not found");
+            return left(new ResourceNotFoundError());
         }
 
         if (authorId !== question.authorId.toString()) {
-            throw new Deno.errors.PermissionDenied();
+            return left(new NotAllowedError());
         }
 
         question.bestAnswerId = answer.id;
 
         await this.questionsRepository.save(question);
 
-        return {
-            question,
-        };
+        return right({ question });
     }
 }
