@@ -1,3 +1,4 @@
+import { Either, right } from '../../../../core/either.ts';
 import { AnswersComment } from '../../enterprise/entities/answer-comment.ts';
 import { AnswersCommentsRepository } from '../repositories/answers-comments-repository.ts';
 
@@ -6,9 +7,9 @@ interface FetchAnswersCommentsUseCaseRequest {
     page: number;
 }
 
-interface FetchAnswersCommentsUseCaseResponse {
+type FetchAnswersCommentsUseCaseResponse = Either<null, {
     answersComments: AnswersComment[];
-}
+}>;
 
 export class FetchAnswersCommentsUseCase {
     constructor(
@@ -25,8 +26,8 @@ export class FetchAnswersCommentsUseCase {
                 },
             );
 
-        return {
+        return right({
             answersComments,
-        };
+        });
     }
 }
