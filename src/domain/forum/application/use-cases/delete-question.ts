@@ -1,27 +1,34 @@
+import { Either, left, right } from '../../../../core/either.ts';
 import { QuestionsRepository } from '../repositories/questions-repository.ts';
+import { NotAllowedError } from './errors/not-allowed-error.ts';
+import { ResourceNotFoundError } from './errors/resource-not-found-error.ts';
 
 interface DeleteQuestionUseCaseRequest {
     authorId: string;
     questionId: string;
 }
 
+type DeleteQuestionUseCaseResponse = Either<
+    ResourceNotFoundError | NotAllowedError,
+    null
+>;
 export class DeleteQuestionUseCase {
     constructor(private questionsRepository: QuestionsRepository) {}
 
     async execute(
         { authorId, questionId }: DeleteQuestionUseCaseRequest,
-    ) {
+    ): Promise<DeleteQuestionUseCaseResponse> {
         const question = await this.questionsRepository.findById(questionId);
 
         if (!question) {
-            throw new Error("Question not found.");
+            return left(new ResourceNotFoundError());
         }
 
         if (authorId !== question.authorId.toString()) {
-            throw new Deno.errors.PermissionDenied();
+            return left(new NotAllowedError());
         }
 
         await this.questionsRepository.delete(question);
-        return {};
+        return right(null);
     }
 }
