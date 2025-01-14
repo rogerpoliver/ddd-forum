@@ -1,12 +1,12 @@
-import { expect } from "@std/expect/expect";
-import { beforeEach, describe, it } from "@std/testing/bdd";
+import { expect } from '@std/expect/expect';
+import { beforeEach, describe, it } from '@std/testing/bdd';
 
-import { makeAnswer } from "../../../../../test/factories/make-answer.ts";
+import { makeAnswer } from '../../../../../test/factories/make-answer.ts';
 import {
-    InMemoryAnswersRepository,
-} from "../../../../../test/repositories/in-memory-answers-repository.ts";
-import { UniqueEntityID } from "../../../../core/entities/unique-entity-id.ts";
-import { FetchQuestionsAnswersUseCase } from "./fetch-questions-answer.ts";
+    InMemoryAnswersRepository
+} from '../../../../../test/repositories/in-memory-answers-repository.ts';
+import { UniqueEntityID } from '../../../../core/entities/unique-entity-id.ts';
+import { FetchQuestionsAnswersUseCase } from './fetch-questions-answers.ts';
 
 let inMemoryAnswersRepository: InMemoryAnswersRepository;
 let sut: FetchQuestionsAnswersUseCase;
