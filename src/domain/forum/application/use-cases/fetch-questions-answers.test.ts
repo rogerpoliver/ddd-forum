@@ -12,62 +12,67 @@ let inMemoryAnswersRepository: InMemoryAnswersRepository;
 let sut: FetchQuestionsAnswersUseCase;
 
 describe("Fetch question's answers", () => {
-    beforeEach(() => {
-        inMemoryAnswersRepository = new InMemoryAnswersRepository();
-        sut = new FetchQuestionsAnswersUseCase(inMemoryAnswersRepository);
+  beforeEach(() => {
+    inMemoryAnswersRepository = new InMemoryAnswersRepository();
+    sut = new FetchQuestionsAnswersUseCase(inMemoryAnswersRepository);
+  });
+
+  it("should be able to fetch answers by question id", async () => {
+    await inMemoryAnswersRepository.create(makeAnswer({
+      questionId: new UniqueEntityID("question-0"),
+    }));
+    await inMemoryAnswersRepository.create(makeAnswer({
+      questionId: new UniqueEntityID("question-0"),
+    }));
+    await inMemoryAnswersRepository.create(makeAnswer({
+      questionId: new UniqueEntityID("question-1"),
+    }));
+    await inMemoryAnswersRepository.create(makeAnswer({
+      questionId: new UniqueEntityID("question-0"),
+    }));
+
+    const resultsFromQuestionZero = await sut.execute({
+      questionId: "question-0",
+      page: 1,
     });
 
-    it("should be able to fetch answers by question id", async () => {
-        await inMemoryAnswersRepository.create(makeAnswer({
-            questionId: new UniqueEntityID("question-0"),
-        }));
-        await inMemoryAnswersRepository.create(makeAnswer({
-            questionId: new UniqueEntityID("question-0"),
-        }));
-        await inMemoryAnswersRepository.create(makeAnswer({
-            questionId: new UniqueEntityID("question-1"),
-        }));
-        await inMemoryAnswersRepository.create(makeAnswer({
-            questionId: new UniqueEntityID("question-0"),
-        }));
-
-        const { answers: answersFromQuestionZero } = await sut.execute({
-            questionId: "question-0",
-            page: 1,
-        });
-        const { answers: answersFromQuestionOne } = await sut.execute({
-            questionId: "question-1",
-            page: 1,
-        });
-
-        expect(answersFromQuestionZero).toHaveLength(3);
-        expect(answersFromQuestionOne).toHaveLength(1);
-        expect(answersFromQuestionZero[0].questionId.toString()).toEqual(
-            "question-0",
-        );
-        expect(answersFromQuestionZero[1].questionId.toString()).toEqual(
-            "question-0",
-        );
-        expect(answersFromQuestionZero[2].questionId.toString()).toEqual(
-            "question-0",
-        );
-        expect(answersFromQuestionOne[0].questionId.toString()).toEqual(
-            "question-1",
-        );
+    const resultsFromQuestionOne = await sut.execute({
+      questionId: "question-1",
+      page: 1,
     });
 
-    it("should be able to fetch paginated answers", async () => {
-        for (let index = 1; index <= 22; index++) {
-            await inMemoryAnswersRepository.create(makeAnswer({
-                questionId: new UniqueEntityID("question-1"),
-            }));
-        }
+    expect(resultsFromQuestionZero.value?.answers).toHaveLength(3);
+    expect(resultsFromQuestionOne.value?.answers).toHaveLength(1);
+    expect(resultsFromQuestionZero.value?.answers[0].questionId.toString())
+      .toEqual(
+        "question-0",
+      );
+    expect(resultsFromQuestionZero.value?.answers[1].questionId.toString())
+      .toEqual(
+        "question-0",
+      );
+    expect(resultsFromQuestionZero.value?.answers[2].questionId.toString())
+      .toEqual(
+        "question-0",
+      );
+    expect(resultsFromQuestionOne.value?.answers[0].questionId.toString())
+      .toEqual(
+        "question-1",
+      );
+  });
 
-        const { answers } = await sut.execute({
-            questionId: "question-1",
-            page: 2,
-        });
+  it("should be able to fetch paginated answers", async () => {
+    for (let index = 1; index <= 22; index++) {
+      await inMemoryAnswersRepository.create(makeAnswer({
+        questionId: new UniqueEntityID("question-1"),
+      }));
+    }
 
-        expect(answers).toHaveLength(2);
+    const result = await sut.execute({
+      questionId: "question-1",
+      page: 2,
     });
+
+    expect(result.value?.answers).toHaveLength(2);
+  });
 });

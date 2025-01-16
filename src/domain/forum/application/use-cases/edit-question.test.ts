@@ -7,54 +7,58 @@ import {
 } from '../../../../../test/repositories/in-memory-questions-repository.ts';
 import { UniqueEntityID } from '../../../../core/entities/unique-entity-id.ts';
 import { EditQuestionUseCase } from './edit-question.ts';
+import { NotAllowedError } from './errors/not-allowed-error.ts';
 
 let inMemoryQuestionsRepository: InMemoryQuestionsRepository;
 let sut: EditQuestionUseCase;
 
 describe("Edit Question", () => {
-    beforeEach(() => {
-        inMemoryQuestionsRepository = new InMemoryQuestionsRepository();
-        sut = new EditQuestionUseCase(inMemoryQuestionsRepository);
+  beforeEach(() => {
+    inMemoryQuestionsRepository = new InMemoryQuestionsRepository();
+    sut = new EditQuestionUseCase(inMemoryQuestionsRepository);
+  });
+
+  it("should be able to edit a question", async () => {
+    const newQuestion = makeQuestion(
+      {
+        authorId: new UniqueEntityID("author-1"),
+      },
+      new UniqueEntityID("question-1"),
+    );
+
+    await inMemoryQuestionsRepository.create(newQuestion);
+
+    await sut.execute({
+      questionId: newQuestion.id.toString(),
+      authorId: "author-1",
+      title: "new title",
+      content: "new content",
     });
 
-    it("should be able to edit a question", async () => {
-        const newQuestion = makeQuestion(
-            {
-                authorId: new UniqueEntityID("author-1"),
-            },
-            new UniqueEntityID("question-1"),
-        );
+    expect(inMemoryQuestionsRepository.items[0]).toMatchObject({
+      title: "new title",
+      content: "new content",
+    });
+  });
 
-        await inMemoryQuestionsRepository.create(newQuestion);
+  it("should not be able to edit a question from another user", async () => {
+    const newQuestion = makeQuestion(
+      {
+        authorId: new UniqueEntityID("author-1"),
+      },
+      new UniqueEntityID("question-1"),
+    );
 
-        await sut.execute({
-            questionId: newQuestion.id.toString(),
-            authorId: "author-1",
-            title: "new title",
-            content: "new content",
-        });
+    await inMemoryQuestionsRepository.create(newQuestion);
 
-        expect(inMemoryQuestionsRepository.items[0]).toMatchObject({
-            title: "new title",
-            content: "new content",
-        });
+    const result = await sut.execute({
+      questionId: newQuestion.id.toString(),
+      authorId: "author-2",
+      title: "new title",
+      content: "new content",
     });
 
-    it("should not be able to edit a question from another user", async () => {
-        const newQuestion = makeQuestion(
-            {
-                authorId: new UniqueEntityID("author-1"),
-            },
-            new UniqueEntityID("question-1"),
-        );
-
-        await inMemoryQuestionsRepository.create(newQuestion);
-
-        await expect(sut.execute({
-            questionId: newQuestion.id.toString(),
-            authorId: "author-2",
-            title: "new title",
-            content: "new content",
-        })).rejects.toBeInstanceOf(Error);
-    });
+    expect(result.isLeft()).toBe(true);
+    expect(result.value).toBeInstanceOf(NotAllowedError);
+  });
 });

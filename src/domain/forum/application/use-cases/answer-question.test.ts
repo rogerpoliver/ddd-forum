@@ -22,11 +22,13 @@ describe("Create Question", () => {
       content: "Question content",
     });
 
-    expect(result.question.authorId.toString()).toEqual("1");
-    expect(result.question.title).toEqual("New question");
-    expect(result.question.content).toEqual("Question content");
+    expect(result.isRight()).toBe(true);
+
+    expect(result.value?.question.authorId.toString()).toEqual("1");
+    expect(result.value?.question.title).toEqual("New question");
+    expect(result.value?.question.content).toEqual("Question content");
     expect(inMemoryQuestionsRepository.items[0]).toEqual(
-      result.question,
+      result.value?.question,
     );
   });
 });

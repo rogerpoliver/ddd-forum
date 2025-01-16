@@ -12,57 +12,56 @@ let inMemoryAnswerCommentsRepository: InMemoryAnswersCommentsRepository;
 let sut: FetchAnswersCommentsUseCase;
 
 describe("Fetch answersComments", () => {
-    beforeEach(() => {
-        inMemoryAnswerCommentsRepository =
-            new InMemoryAnswersCommentsRepository();
-        sut = new FetchAnswersCommentsUseCase(
-            inMemoryAnswerCommentsRepository,
-        );
+  beforeEach(() => {
+    inMemoryAnswerCommentsRepository = new InMemoryAnswersCommentsRepository();
+    sut = new FetchAnswersCommentsUseCase(
+      inMemoryAnswerCommentsRepository,
+    );
+  });
+
+  it("should be able to fetch answerComments by answerId", async () => {
+    const answerId = new UniqueEntityID("answer-1");
+
+    await inMemoryAnswerCommentsRepository.create(
+      makeAnswerComment({
+        answerId: answerId,
+      }),
+    );
+    await inMemoryAnswerCommentsRepository.create(
+      makeAnswerComment({
+        answerId: answerId,
+      }),
+    );
+    await inMemoryAnswerCommentsRepository.create(
+      makeAnswerComment({
+        answerId: answerId,
+      }),
+    );
+
+    const result = await sut.execute({
+      answerId: "answer-1",
+      page: 1,
     });
 
-    it("should be able to fetch answerComments by answerId", async () => {
-        const answerId = new UniqueEntityID("answer-1");
+    expect(result.value?.answersComments).toHaveLength(3);
+  });
 
-        await inMemoryAnswerCommentsRepository.create(
-            makeAnswerComment({
-                answerId: answerId,
-            }),
-        );
-        await inMemoryAnswerCommentsRepository.create(
-            makeAnswerComment({
-                answerId: answerId,
-            }),
-        );
-        await inMemoryAnswerCommentsRepository.create(
-            makeAnswerComment({
-                answerId: answerId,
-            }),
-        );
+  it("should be able to fetch paginated answerComments by answerId", async () => {
+    const answerId = new UniqueEntityID("answer-1");
 
-        const { answersComments } = await sut.execute({
-            answerId: "answer-1",
-            page: 1,
-        });
+    for (let index = 1; index <= 22; index++) {
+      await inMemoryAnswerCommentsRepository.create(
+        makeAnswerComment({
+          answerId: answerId,
+        }),
+      );
+    }
 
-        expect(answersComments).toHaveLength(3);
+    const result = await sut.execute({
+      answerId: "answer-1",
+      page: 2,
     });
 
-    it("should be able to fetch paginated answerComments by answerId", async () => {
-        const answerId = new UniqueEntityID("answer-1");
-
-        for (let index = 1; index <= 22; index++) {
-            await inMemoryAnswerCommentsRepository.create(
-                makeAnswerComment({
-                    answerId: answerId,
-                }),
-            );
-        }
-
-        const { answersComments } = await sut.execute({
-            answerId: "answer-1",
-            page: 2,
-        });
-
-        expect(answersComments).toHaveLength(2);
-    });
+    expect(result.value?.answersComments).toHaveLength(2);
+  });
 });
