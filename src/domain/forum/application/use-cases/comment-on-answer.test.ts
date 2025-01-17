@@ -1,15 +1,15 @@
-import { faker } from '@faker-js/faker';
-import { expect } from '@std/expect/expect';
-import { beforeEach, describe, it } from '@std/testing/bdd';
+import { faker } from "@faker-js/faker";
+import { expect } from "@std/expect/expect";
+import { beforeEach, describe, it } from "@std/testing/bdd";
 
-import { makeAnswer } from '../../../../../test/factories/make-answer.ts';
+import { makeAnswer } from "../../../../../test/factories/make-answer.ts";
 import {
-    InMemoryAnswersCommentsRepository
-} from '../../../../../test/repositories/in-memory-answers-comments-repository.ts';
+  InMemoryAnswersCommentsRepository,
+} from "../../../../../test/repositories/in-memory-answers-comments-repository.ts";
 import {
-    InMemoryAnswersRepository
-} from '../../../../../test/repositories/in-memory-answers-repository.ts';
-import { CommentOnAnswerUseCase } from './comment-on-answer.ts';
+  InMemoryAnswersRepository,
+} from "../../../../../test/repositories/in-memory-answers-repository.ts";
+import { CommentOnAnswerUseCase } from "./comment-on-answer.ts";
 
 let inMemoryAnswersCommentsRepository: InMemoryAnswersCommentsRepository;
 let inMemoryAnswersRepository: InMemoryAnswersRepository;
@@ -30,12 +30,13 @@ describe("Create Answer Comment", () => {
     const answer = makeAnswer();
     await inMemoryAnswersRepository.create(answer);
 
-    await sut.execute({
+    const result = await sut.execute({
       answerId: answer.id.toString(),
       authorId: answer.authorId.toString(),
       content: "test content",
     });
 
+    expect(result.isRight()).toBe(true);
     expect(inMemoryAnswersCommentsRepository.items[0].content).toEqual(
       "test content",
     );

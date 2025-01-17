@@ -1,14 +1,14 @@
-import { expect } from '@std/expect/expect';
-import { beforeEach, describe, it } from '@std/testing/bdd';
+import { expect } from "@std/expect/expect";
+import { beforeEach, describe, it } from "@std/testing/bdd";
 
-import { makeQuestion } from '../../../../../test/factories/make-question.ts';
+import { makeQuestion } from "../../../../../test/factories/make-question.ts";
 import {
-    InMemoryQuestionsCommentsRepository
-} from '../../../../../test/repositories/in-memory-questions-comments-repository.ts';
+  InMemoryQuestionsCommentsRepository,
+} from "../../../../../test/repositories/in-memory-questions-comments-repository.ts";
 import {
-    InMemoryQuestionsRepository
-} from '../../../../../test/repositories/in-memory-questions-repository.ts';
-import { CommentOnQuestionUseCase } from './comment-on-question.ts';
+  InMemoryQuestionsRepository,
+} from "../../../../../test/repositories/in-memory-questions-repository.ts";
+import { CommentOnQuestionUseCase } from "./comment-on-question.ts";
 
 let inMemoryQuestionsCommentsRepository: InMemoryQuestionsCommentsRepository;
 let inMemoryQuestionsRepository: InMemoryQuestionsRepository;
@@ -30,12 +30,13 @@ describe("Create Question Comment", () => {
     const answer = makeQuestion();
     await inMemoryQuestionsRepository.create(answer);
 
-    await sut.execute({
+    const result = await sut.execute({
       questionId: answer.id.toString(),
       authorId: answer.authorId.toString(),
       content: "test content",
     });
 
+    expect(result.isRight()).toBe(true);
     expect(inMemoryQuestionsCommentsRepository.items[0].content).toEqual(
       "test content",
     );

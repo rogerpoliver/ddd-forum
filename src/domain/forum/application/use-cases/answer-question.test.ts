@@ -1,10 +1,10 @@
-import { expect } from '@std/expect/expect';
-import { beforeEach, describe, it } from '@std/testing/bdd';
+import { expect } from "@std/expect/expect";
+import { beforeEach, describe, it } from "@std/testing/bdd";
 
 import {
-    InMemoryQuestionsRepository
-} from '../../../../../test/repositories/in-memory-questions-repository.ts';
-import { CreateQuestionUseCase } from './create-question.ts';
+  InMemoryQuestionsRepository,
+} from "../../../../../test/repositories/in-memory-questions-repository.ts";
+import { CreateQuestionUseCase } from "./create-question.ts";
 
 let inMemoryQuestionsRepository: InMemoryQuestionsRepository;
 let sut: CreateQuestionUseCase;
@@ -23,7 +23,6 @@ describe("Create Question", () => {
     });
 
     expect(result.isRight()).toBe(true);
-
     expect(result.value?.question.authorId.toString()).toEqual("1");
     expect(result.value?.question.title).toEqual("New question");
     expect(result.value?.question.content).toEqual("Question content");
