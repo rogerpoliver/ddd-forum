@@ -1,13 +1,13 @@
-import { expect } from '@std/expect';
-import { beforeEach, describe, it } from '@std/testing/bdd';
+import { expect } from "@std/expect";
+import { beforeEach, describe, it } from "@std/testing/bdd";
 
-import { makeAnswer } from '../../../../../test/factories/make-answer.ts';
+import { makeAnswer } from "../../../../../test/factories/make-answer.ts";
 import {
-    InMemoryAnswersRepository
-} from '../../../../../test/repositories/in-memory-answers-repository.ts';
-import { UniqueEntityID } from '../../../../core/entities/unique-entity-id.ts';
-import { EditAnswerUseCase } from './edit-answer.ts';
-import { NotAllowedError } from './errors/not-allowed-error.ts';
+  InMemoryAnswersRepository,
+} from "../../../../../test/repositories/in-memory-answers-repository.ts";
+import { UniqueEntityID } from "../../../../core/entities/unique-entity-id.ts";
+import { EditAnswerUseCase } from "./edit-answer.ts";
+import { NotAllowedError } from "./errors/not-allowed-error.ts";
 
 let inMemoryAnswersRepository: InMemoryAnswersRepository;
 let sut: EditAnswerUseCase;
@@ -28,12 +28,13 @@ describe("Edit Answer", () => {
 
     await inMemoryAnswersRepository.create(newAnswer);
 
-    await sut.execute({
+    const result = await sut.execute({
       answerId: newAnswer.id.toString(),
       authorId: "author-1",
       content: "new content",
     });
 
+    expect(result.isRight()).toBe(true);
     expect(inMemoryAnswersRepository.items[0]).toMatchObject({
       content: "new content",
     });

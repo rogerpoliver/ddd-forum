@@ -1,12 +1,12 @@
-import { expect } from '@std/expect/expect';
-import { beforeEach, describe, it } from '@std/testing/bdd';
+import { expect } from "@std/expect/expect";
+import { beforeEach, describe, it } from "@std/testing/bdd";
 
-import { makeQuestionComment } from '../../../../../test/factories/make-question-comment.ts';
+import { makeQuestionComment } from "../../../../../test/factories/make-question-comment.ts";
 import {
-    InMemoryQuestionsCommentsRepository
-} from '../../../../../test/repositories/in-memory-questions-comments-repository.ts';
-import { UniqueEntityID } from '../../../../core/entities/unique-entity-id.ts';
-import { FetchQuestionsCommentsUseCase } from './fetch-questions-comments.ts';
+  InMemoryQuestionsCommentsRepository,
+} from "../../../../../test/repositories/in-memory-questions-comments-repository.ts";
+import { UniqueEntityID } from "../../../../core/entities/unique-entity-id.ts";
+import { FetchQuestionsCommentsUseCase } from "./fetch-questions-comments.ts";
 
 let inMemoryQuestionCommentsRepository: InMemoryQuestionsCommentsRepository;
 let sut: FetchQuestionsCommentsUseCase;
@@ -44,6 +44,7 @@ describe("Fetch questionsComments", () => {
       page: 1,
     });
 
+    expect(result.isRight()).toBe(true);
     expect(result.value?.questionsComments).toHaveLength(3);
   });
 
@@ -63,6 +64,7 @@ describe("Fetch questionsComments", () => {
       page: 2,
     });
 
+    expect(result.isRight()).toBe(true);
     expect(result.value?.questionsComments).toHaveLength(2);
   });
 });

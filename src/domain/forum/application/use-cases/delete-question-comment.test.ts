@@ -1,13 +1,13 @@
-import { expect } from '@std/expect';
-import { beforeEach, describe, it } from '@std/testing/bdd';
+import { expect } from "@std/expect";
+import { beforeEach, describe, it } from "@std/testing/bdd";
 
-import { makeQuestionComment } from '../../../../../test/factories/make-question-comment.ts';
+import { makeQuestionComment } from "../../../../../test/factories/make-question-comment.ts";
 import {
-    InMemoryQuestionsCommentsRepository
-} from '../../../../../test/repositories/in-memory-questions-comments-repository.ts';
-import { UniqueEntityID } from '../../../../core/entities/unique-entity-id.ts';
-import { DeleteQuestionCommentUseCase } from './delete-question-comment.ts';
-import { NotAllowedError } from './errors/not-allowed-error.ts';
+  InMemoryQuestionsCommentsRepository,
+} from "../../../../../test/repositories/in-memory-questions-comments-repository.ts";
+import { UniqueEntityID } from "../../../../core/entities/unique-entity-id.ts";
+import { DeleteQuestionCommentUseCase } from "./delete-question-comment.ts";
+import { NotAllowedError } from "./errors/not-allowed-error.ts";
 
 let inMemoryQuestionsCommentsRepository: InMemoryQuestionsCommentsRepository;
 let sut: DeleteQuestionCommentUseCase;
@@ -31,11 +31,12 @@ describe("Delete QuestionsComment", () => {
 
     await inMemoryQuestionsCommentsRepository.create(newQuestionComment);
 
-    await sut.execute({
+    const result = await sut.execute({
       questionCommentId: "question-comment-1",
       authorId: "author-1",
     });
 
+    expect(result.isRight()).toBe(true);
     expect(inMemoryQuestionsCommentsRepository.items).toHaveLength(0);
   });
 

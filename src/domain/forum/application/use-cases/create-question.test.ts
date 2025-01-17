@@ -26,7 +26,6 @@ describe("Create Question", () => {
     const createdQuestion = inMemoryQuestionsRepository.items[0];
 
     expect(result.isRight()).toBe(true);
-
     expect(createdQuestion.authorId.toString()).toEqual("question-1");
     expect(createdQuestion.title).toEqual("new title");
     expect(createdQuestion.content).toEqual("some content");

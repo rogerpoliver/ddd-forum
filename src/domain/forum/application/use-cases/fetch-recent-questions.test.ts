@@ -1,11 +1,11 @@
-import { expect } from '@std/expect/expect';
-import { beforeEach, describe, it } from '@std/testing/bdd';
+import { expect } from "@std/expect/expect";
+import { beforeEach, describe, it } from "@std/testing/bdd";
 
-import { makeQuestion } from '../../../../../test/factories/make-question.ts';
+import { makeQuestion } from "../../../../../test/factories/make-question.ts";
 import {
-    InMemoryQuestionsRepository
-} from '../../../../../test/repositories/in-memory-questions-repository.ts';
-import { FetchRecentQuestionsUseCase } from './fetch-recent-questions.ts';
+  InMemoryQuestionsRepository,
+} from "../../../../../test/repositories/in-memory-questions-repository.ts";
+import { FetchRecentQuestionsUseCase } from "./fetch-recent-questions.ts";
 
 let inMemoryQuestionsRepository: InMemoryQuestionsRepository;
 let sut: FetchRecentQuestionsUseCase;
@@ -31,6 +31,7 @@ describe("Fetch recent questions", () => {
       page: 1,
     });
 
+    expect(result.isRight()).toBe(true);
     expect(result.value?.questions).toHaveLength(3);
     expect(result.value?.questions[0].createdAt.getTime()).toEqual(
       new Date(2024, 11, 26).getTime(),
@@ -54,6 +55,7 @@ describe("Fetch recent questions", () => {
       page: 2,
     });
 
+    expect(result.isRight()).toBe(true);
     expect(result.value?.questions).toHaveLength(2);
   });
 });

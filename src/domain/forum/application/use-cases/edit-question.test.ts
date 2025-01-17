@@ -1,13 +1,13 @@
-import { expect } from '@std/expect';
-import { beforeEach, describe, it } from '@std/testing/bdd';
+import { expect } from "@std/expect";
+import { beforeEach, describe, it } from "@std/testing/bdd";
 
-import { makeQuestion } from '../../../../../test/factories/make-question.ts';
+import { makeQuestion } from "../../../../../test/factories/make-question.ts";
 import {
-    InMemoryQuestionsRepository
-} from '../../../../../test/repositories/in-memory-questions-repository.ts';
-import { UniqueEntityID } from '../../../../core/entities/unique-entity-id.ts';
-import { EditQuestionUseCase } from './edit-question.ts';
-import { NotAllowedError } from './errors/not-allowed-error.ts';
+  InMemoryQuestionsRepository,
+} from "../../../../../test/repositories/in-memory-questions-repository.ts";
+import { UniqueEntityID } from "../../../../core/entities/unique-entity-id.ts";
+import { EditQuestionUseCase } from "./edit-question.ts";
+import { NotAllowedError } from "./errors/not-allowed-error.ts";
 
 let inMemoryQuestionsRepository: InMemoryQuestionsRepository;
 let sut: EditQuestionUseCase;
@@ -28,13 +28,14 @@ describe("Edit Question", () => {
 
     await inMemoryQuestionsRepository.create(newQuestion);
 
-    await sut.execute({
+    const result = await sut.execute({
       questionId: newQuestion.id.toString(),
       authorId: "author-1",
       title: "new title",
       content: "new content",
     });
 
+    expect(result.isRight()).toBe(true);
     expect(inMemoryQuestionsRepository.items[0]).toMatchObject({
       title: "new title",
       content: "new content",
