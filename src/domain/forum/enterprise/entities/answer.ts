@@ -1,10 +1,9 @@
 import { dayjs } from "@xtool/dayjs";
 
-import { Entity } from "../../../../core/entities/entity.ts";
+import { AggregateRoot } from "../../../../core/entities/aggregate-root.ts";
 import { Optional } from "../../../../core/types/optional.ts";
 
 import type { UniqueEntityID } from "../../../../core/entities/unique-entity-id.ts";
-
 export interface AnswerProps {
   authorId: UniqueEntityID;
   questionId: UniqueEntityID;
@@ -13,7 +12,7 @@ export interface AnswerProps {
   updatedAt?: Date;
 }
 
-export class Answer extends Entity<AnswerProps> {
+export class Answer extends AggregateRoot<AnswerProps> {
   get authorId() {
     return this.props.authorId;
   }
