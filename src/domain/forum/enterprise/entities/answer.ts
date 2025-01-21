@@ -1,7 +1,7 @@
-import { dayjs } from '@xtool/dayjs';
+import { dayjs } from "@xtool/dayjs";
 
-import { Entity } from '../../../../core/entities/entity.ts';
-import { Optional } from '../../../../core/types/optional.ts';
+import { Entity } from "../../../../core/entities/entity.ts";
+import { Optional } from "../../../../core/types/optional.ts";
 
 import type { UniqueEntityID } from "../../../../core/entities/unique-entity-id.ts";
 
@@ -39,7 +39,7 @@ export class Answer extends Entity<AnswerProps> {
     return this.props.updatedAt;
   }
 
-  get execerpt() {
+  get excerpt() {
     return this.content.substring(0, 20).trimEnd().concat("...");
   }
 

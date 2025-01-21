@@ -1,8 +1,8 @@
-import { dayjs } from '@xtool/dayjs';
+import { dayjs } from "@xtool/dayjs";
 
-import { Entity } from '../../../../core/entities/entity.ts';
-import { Optional } from '../../../../core/types/optional.ts';
-import { Slug } from './value-objects/slug.ts';
+import { AggregateRoot } from "../../../../core/entities/aggregate-root.ts";
+import { Optional } from "../../../../core/types/optional.ts";
+import { Slug } from "./value-objects/slug.ts";
 
 import type { UniqueEntityID } from "../../../../core/entities/unique-entity-id.ts";
 
@@ -16,7 +16,7 @@ export interface QuestionProps {
   updatedAt?: Date;
 }
 
-export class Question extends Entity<QuestionProps> {
+export class Question extends AggregateRoot<QuestionProps> {
   get authorId() {
     return this.props.authorId;
   }
@@ -70,7 +70,7 @@ export class Question extends Entity<QuestionProps> {
     return dayjs().diff(this.props.createdAt, "day") <= 3;
   }
 
-  get execerpt() {
+  get excerpt() {
     return this.content.substring(0, 20).trimEnd().concat("...");
   }
 
