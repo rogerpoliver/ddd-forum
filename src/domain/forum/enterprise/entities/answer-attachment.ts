@@ -1,5 +1,5 @@
-import { Entity } from "../../../../core/entities/entity.ts";
-import { UniqueEntityID } from "../../../../core/entities/unique-entity-id.ts";
+import { Entity } from '../../../../core/entities/entity.ts';
+import { UniqueEntityID } from '../../../../core/entities/unique-entity-id.ts';
 
 interface AnswerAttachmentProps {
   answerId: UniqueEntityID;
@@ -11,7 +11,7 @@ export class AnswerAttachment extends Entity<AnswerAttachmentProps> {
     return this.props.answerId;
   }
 
-  getAttachmentId() {
+  get attachmentId() {
     return this.props.attachmentId;
   }
 

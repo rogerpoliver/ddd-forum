@@ -1,10 +1,10 @@
-import { expect } from "@std/expect/expect";
-import { beforeEach, describe, it } from "@std/testing/bdd";
+import { expect } from '@std/expect/expect';
+import { beforeEach, describe, it } from '@std/testing/bdd';
 
 import {
-  InMemoryQuestionsRepository,
-} from "../../../../../test/repositories/in-memory-questions-repository.ts";
-import { CreateQuestionUseCase } from "./create-question.ts";
+    InMemoryQuestionsRepository
+} from '../../../../../test/repositories/in-memory-questions-repository.ts';
+import { CreateQuestionUseCase } from './create-question.ts';
 
 let inMemoryQuestionsRepository: InMemoryQuestionsRepository;
 let sut: CreateQuestionUseCase;
@@ -20,6 +20,7 @@ describe("Create Question", () => {
       authorId: "1",
       title: "New question",
       content: "Question content",
+      attachmentsIds: [],
     });
 
     expect(result.isRight()).toBe(true);
