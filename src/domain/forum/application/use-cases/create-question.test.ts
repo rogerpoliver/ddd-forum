@@ -1,11 +1,11 @@
-import { expect } from '@std/expect/expect';
-import { beforeEach, describe, it } from '@std/testing/bdd';
+import { expect } from "@std/expect/expect";
+import { beforeEach, describe, it } from "@std/testing/bdd";
 
 import {
-    InMemoryQuestionsRepository
-} from '../../../../../test/repositories/in-memory-questions-repository.ts';
-import { UniqueEntityID } from '../../../../core/entities/unique-entity-id.ts';
-import { CreateQuestionUseCase } from './create-question.ts';
+  InMemoryQuestionsRepository,
+} from "../../../../../test/repositories/in-memory-questions-repository.ts";
+import { UniqueEntityID } from "../../../../core/entities/unique-entity-id.ts";
+import { CreateQuestionUseCase } from "./create-question.ts";
 
 let inMemoryQuestionsRepository: InMemoryQuestionsRepository;
 let sut: CreateQuestionUseCase;
@@ -32,9 +32,9 @@ describe("Create Question", () => {
     );
     expect(createdQuestion.title).toEqual("new title");
     expect(createdQuestion.content).toEqual("some content");
-    expect(createdQuestion.attachments).toHaveLength(2);
+    expect(createdQuestion.attachments.currentItems).toHaveLength(2);
 
-    expect(createdQuestion.attachments).toEqual([
+    expect(createdQuestion.attachments.currentItems).toEqual([
       expect.objectContaining({
         props: expect.objectContaining({
           attachmentId: new UniqueEntityID("attachment1"),

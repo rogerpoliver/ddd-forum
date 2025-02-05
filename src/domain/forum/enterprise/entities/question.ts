@@ -1,9 +1,9 @@
-import { dayjs } from '@xtool/dayjs';
+import { dayjs } from "@xtool/dayjs";
 
-import { AggregateRoot } from '../../../../core/entities/aggregate-root.ts';
-import { Optional } from '../../../../core/types/optional.ts';
-import { QuestionAttachment } from './question-attachment.ts';
-import { Slug } from './value-objects/slug.ts';
+import { AggregateRoot } from "../../../../core/entities/aggregate-root.ts";
+import { Optional } from "../../../../core/types/optional.ts";
+import { QuestionAttachmentList } from "./question-attachment-list.ts";
+import { Slug } from "./value-objects/slug.ts";
 
 import type { UniqueEntityID } from "../../../../core/entities/unique-entity-id.ts";
 
@@ -15,7 +15,7 @@ export interface QuestionProps {
   content: string;
   createdAt: Date;
   updatedAt?: Date;
-  attachments: QuestionAttachment[];
+  attachments: QuestionAttachmentList;
 }
 
 export class Question extends AggregateRoot<QuestionProps> {
@@ -84,7 +84,7 @@ export class Question extends AggregateRoot<QuestionProps> {
     return this.props.attachments;
   }
 
-  set attachments(attachments: QuestionAttachment[]) {
+  set attachments(attachments: QuestionAttachmentList) {
     this.props.attachments = attachments;
   }
 
@@ -96,7 +96,7 @@ export class Question extends AggregateRoot<QuestionProps> {
       ...props,
       createdAt: props.createdAt ?? new Date(),
       slug: props.slug ?? Slug.createFromText(props.title),
-      attachments: props.attachments ?? [],
+      attachments: props.attachments ?? new QuestionAttachmentList(),
     }, id);
     return question;
   }

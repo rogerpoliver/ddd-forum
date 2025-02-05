@@ -1,5 +1,6 @@
 import { Either, right } from "../../../../core/either.ts";
 import { UniqueEntityID } from "../../../../core/entities/unique-entity-id.ts";
+import { QuestionAttachmentList } from "../../enterprise/entities/question-attachment-list.ts";
 import { QuestionAttachment } from "../../enterprise/entities/question-attachment.ts";
 import { Question } from "../../enterprise/entities/question.ts";
 import { QuestionsRepository } from "../repositories/questions-repository.ts";
@@ -35,7 +36,7 @@ export class CreateQuestionUseCase {
       });
     });
 
-    question.attachments = questionAttachments;
+    question.attachments = new QuestionAttachmentList(questionAttachments);
 
     await this.questionsRepository.create(question);
 
