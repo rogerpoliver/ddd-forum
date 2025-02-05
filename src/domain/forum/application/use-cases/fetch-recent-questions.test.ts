@@ -3,16 +3,25 @@ import { beforeEach, describe, it } from "@std/testing/bdd";
 
 import { makeQuestion } from "../../../../../test/factories/make-question.ts";
 import {
+  InMemoryQuestionAttachmentsRepository,
+} from "../../../../../test/repositories/in-memory-question-attachments-repository.ts";
+import {
   InMemoryQuestionsRepository,
 } from "../../../../../test/repositories/in-memory-questions-repository.ts";
 import { FetchRecentQuestionsUseCase } from "./fetch-recent-questions.ts";
 
 let inMemoryQuestionsRepository: InMemoryQuestionsRepository;
+let inMemoryQuestionAttachmentsRepository:
+  InMemoryQuestionAttachmentsRepository;
 let sut: FetchRecentQuestionsUseCase;
 
 describe("Fetch recent questions", () => {
   beforeEach(() => {
-    inMemoryQuestionsRepository = new InMemoryQuestionsRepository();
+    inMemoryQuestionAttachmentsRepository =
+      new InMemoryQuestionAttachmentsRepository();
+    inMemoryQuestionsRepository = new InMemoryQuestionsRepository(
+      inMemoryQuestionAttachmentsRepository,
+    );
     sut = new FetchRecentQuestionsUseCase(inMemoryQuestionsRepository);
   });
 

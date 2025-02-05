@@ -3,6 +3,9 @@ import { beforeEach, describe, it } from "@std/testing/bdd";
 
 import { makeQuestion } from "../../../../../test/factories/make-question.ts";
 import {
+  InMemoryQuestionAttachmentsRepository,
+} from "../../../../../test/repositories/in-memory-question-attachments-repository.ts";
+import {
   InMemoryQuestionsCommentsRepository,
 } from "../../../../../test/repositories/in-memory-questions-comments-repository.ts";
 import {
@@ -12,11 +15,17 @@ import { CommentOnQuestionUseCase } from "./comment-on-question.ts";
 
 let inMemoryQuestionsCommentsRepository: InMemoryQuestionsCommentsRepository;
 let inMemoryQuestionsRepository: InMemoryQuestionsRepository;
+let inMemoryQuestionAttachmentsRepository:
+  InMemoryQuestionAttachmentsRepository;
 let sut: CommentOnQuestionUseCase;
 
 describe("Create Question Comment", () => {
   beforeEach(() => {
-    inMemoryQuestionsRepository = new InMemoryQuestionsRepository();
+    inMemoryQuestionAttachmentsRepository =
+      new InMemoryQuestionAttachmentsRepository();
+    inMemoryQuestionsRepository = new InMemoryQuestionsRepository(
+      inMemoryQuestionAttachmentsRepository,
+    );
     inMemoryQuestionsCommentsRepository =
       new InMemoryQuestionsCommentsRepository();
 

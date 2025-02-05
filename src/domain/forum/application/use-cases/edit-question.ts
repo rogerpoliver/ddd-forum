@@ -1,7 +1,7 @@
 import { Either, left, right } from "../../../../core/either.ts";
 import { UniqueEntityID } from "../../../../core/entities/unique-entity-id.ts";
-import { QuestionAttachmentList } from "../../enterprise/entities/question-attachment-list.ts";
 import { QuestionAttachment } from "../../enterprise/entities/question-attachment.ts";
+import { QuestionAttachmentsList } from "../../enterprise/entities/question-attachments-list.ts";
 import { Question } from "../../enterprise/entities/question.ts";
 import { QuestionAttachmentsRepository } from "../repositories/question-attachments-repository.ts";
 import { QuestionsRepository } from "../repositories/questions-repository.ts";
@@ -46,7 +46,7 @@ export class EditQuestionUseCase {
     const currentQuestionAttachments = await this.questionAttachmentsRepository
       .findManyByQuestionId(questionId);
 
-    const questionAttachmentList = new QuestionAttachmentList(
+    const questionAttachmentList = new QuestionAttachmentsList(
       currentQuestionAttachments,
     );
 

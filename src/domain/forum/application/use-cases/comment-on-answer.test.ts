@@ -1,4 +1,3 @@
-import { faker } from "@faker-js/faker";
 import { expect } from "@std/expect/expect";
 import { beforeEach, describe, it } from "@std/testing/bdd";
 
