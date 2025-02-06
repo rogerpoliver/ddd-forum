@@ -1,8 +1,8 @@
-import { dayjs } from '@xtool/dayjs';
+import { dayjs } from "@xtool/dayjs";
 
-import { AggregateRoot } from '../../../../core/entities/aggregate-root.ts';
-import { Optional } from '../../../../core/types/optional.ts';
-import { AnswerAttachment } from './answer-attachment.ts';
+import { AggregateRoot } from "../../../../core/entities/aggregate-root.ts";
+import { Optional } from "../../../../core/types/optional.ts";
+import { AnswerAttachmentsList } from "./answer-attachments-list.ts";
 
 import type { UniqueEntityID } from "../../../../core/entities/unique-entity-id.ts";
 export interface AnswerProps {
@@ -11,7 +11,7 @@ export interface AnswerProps {
   content: string;
   createdAt: Date;
   updatedAt?: Date;
-  attachments: AnswerAttachment[];
+  attachments: AnswerAttachmentsList;
 }
 
 export class Answer extends AggregateRoot<AnswerProps> {
@@ -56,6 +56,10 @@ export class Answer extends AggregateRoot<AnswerProps> {
     return this.props.attachments;
   }
 
+  set attachments(attachments: AnswerAttachmentsList) {
+    this.props.attachments = attachments;
+  }
+
   static create(
     props: Optional<AnswerProps, "createdAt" | "attachments">,
     id?: UniqueEntityID,
@@ -63,7 +67,7 @@ export class Answer extends AggregateRoot<AnswerProps> {
     const answer = new Answer({
       ...props,
       createdAt: props.createdAt ?? new Date(),
-      attachments: props.attachments ?? [],
+      attachments: props.attachments ?? new AnswerAttachmentsList(),
     }, id);
     return answer;
   }

@@ -1,7 +1,7 @@
-import { Entity } from '../../../../core/entities/entity.ts';
-import { UniqueEntityID } from '../../../../core/entities/unique-entity-id.ts';
+import { Entity } from "../../../../core/entities/entity.ts";
+import { UniqueEntityID } from "../../../../core/entities/unique-entity-id.ts";
 
-interface AnswerAttachmentProps {
+export interface AnswerAttachmentProps {
   answerId: UniqueEntityID;
   attachmentId: UniqueEntityID;
 }

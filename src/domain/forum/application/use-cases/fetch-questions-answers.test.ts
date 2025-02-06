@@ -3,17 +3,23 @@ import { beforeEach, describe, it } from "@std/testing/bdd";
 
 import { makeAnswer } from "../../../../../test/factories/make-answer.ts";
 import {
+  InMemoryAnswerAttachmentsRepository,
+} from "../../../../../test/repositories/in-memory-answer-attachments-repository.ts";
+import {
   InMemoryAnswersRepository,
 } from "../../../../../test/repositories/in-memory-answers-repository.ts";
 import { UniqueEntityID } from "../../../../core/entities/unique-entity-id.ts";
 import { FetchQuestionsAnswersUseCase } from "./fetch-questions-answers.ts";
 
 let inMemoryAnswersRepository: InMemoryAnswersRepository;
+let inMemoryAnswerAttachmentsRepository: InMemoryAnswerAttachmentsRepository;
 let sut: FetchQuestionsAnswersUseCase;
 
 describe("Fetch question's answers", () => {
   beforeEach(() => {
-    inMemoryAnswersRepository = new InMemoryAnswersRepository();
+    inMemoryAnswersRepository = new InMemoryAnswersRepository(
+      inMemoryAnswerAttachmentsRepository,
+    );
     sut = new FetchQuestionsAnswersUseCase(inMemoryAnswersRepository);
   });
 

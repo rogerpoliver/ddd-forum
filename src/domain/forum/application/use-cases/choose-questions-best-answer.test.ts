@@ -4,6 +4,9 @@ import { beforeEach, describe, it } from "@std/testing/bdd";
 import { makeAnswer } from "../../../../../test/factories/make-answer.ts";
 import { makeQuestion } from "../../../../../test/factories/make-question.ts";
 import {
+  InMemoryAnswerAttachmentsRepository,
+} from "../../../../../test/repositories/in-memory-answer-attachments-repository.ts";
+import {
   InMemoryAnswersRepository,
 } from "../../../../../test/repositories/in-memory-answers-repository.ts";
 import {
@@ -19,6 +22,7 @@ let inMemoryQuestionsRepository: InMemoryQuestionsRepository;
 let inMemoryAnswersRepository: InMemoryAnswersRepository;
 let inMemoryQuestionAttachmentsRepository:
   InMemoryQuestionAttachmentsRepository;
+let inMemoryAnswerAttachmentsRepository: InMemoryAnswerAttachmentsRepository;
 let sut: ChooseQuestionsBestAnswerUseCase;
 
 describe("Choose Question's best answer", () => {
@@ -28,7 +32,9 @@ describe("Choose Question's best answer", () => {
     inMemoryQuestionsRepository = new InMemoryQuestionsRepository(
       inMemoryQuestionAttachmentsRepository,
     );
-    inMemoryAnswersRepository = new InMemoryAnswersRepository();
+    inMemoryAnswersRepository = new InMemoryAnswersRepository(
+      inMemoryAnswerAttachmentsRepository,
+    );
     sut = new ChooseQuestionsBestAnswerUseCase(
       inMemoryQuestionsRepository,
       inMemoryAnswersRepository,

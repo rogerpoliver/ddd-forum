@@ -2,42 +2,56 @@ import { expect } from "@std/expect/expect";
 import { beforeEach, describe, it } from "@std/testing/bdd";
 
 import {
-  InMemoryQuestionAttachmentsRepository,
-} from "../../../../../test/repositories/in-memory-question-attachments-repository.ts";
+  InMemoryAnswerAttachmentsRepository,
+} from "../../../../../test/repositories/in-memory-answer-attachments-repository.ts";
 import {
-  InMemoryQuestionsRepository,
-} from "../../../../../test/repositories/in-memory-questions-repository.ts";
-import { CreateQuestionUseCase } from "./create-question.ts";
+  InMemoryAnswersRepository,
+} from "../../../../../test/repositories/in-memory-answers-repository.ts";
+import { UniqueEntityID } from "../../../../core/entities/unique-entity-id.ts";
+import { AnswerQuestionUseCase } from "./answer-question.ts";
 
-let inMemoryQuestionsRepository: InMemoryQuestionsRepository;
-let inMemoryQuestionAttachmentsRepository:
-  InMemoryQuestionAttachmentsRepository;
-let sut: CreateQuestionUseCase;
+let inMemoryAnswerAttachmentsRepository: InMemoryAnswerAttachmentsRepository;
+let inMemoryAnswersRepository: InMemoryAnswersRepository;
+let sut: AnswerQuestionUseCase;
 
-describe("Create Question", () => {
+describe("Answer Question", () => {
   beforeEach(() => {
-    inMemoryQuestionAttachmentsRepository =
-      new InMemoryQuestionAttachmentsRepository();
-    inMemoryQuestionsRepository = new InMemoryQuestionsRepository(
-      inMemoryQuestionAttachmentsRepository,
+    inMemoryAnswerAttachmentsRepository =
+      new InMemoryAnswerAttachmentsRepository();
+    inMemoryAnswersRepository = new InMemoryAnswersRepository(
+      inMemoryAnswerAttachmentsRepository,
     );
-    sut = new CreateQuestionUseCase(inMemoryQuestionsRepository);
+    sut = new AnswerQuestionUseCase(inMemoryAnswersRepository);
   });
 
-  it("should be able to create a question", async () => {
+  it("should be able to answer a question", async () => {
     const result = await sut.execute({
-      authorId: "1",
-      title: "New question",
-      content: "Question content",
-      attachmentsIds: [],
+      questionId: "1",
+      instructorId: new UniqueEntityID("author-1").toString(),
+      content: "some content",
+      attachmentsIds: ["attachment1", "attachment2"],
     });
 
+    const createdAnswer = inMemoryAnswersRepository.items[0];
+
     expect(result.isRight()).toBe(true);
-    expect(result.value?.question.authorId.toString()).toEqual("1");
-    expect(result.value?.question.title).toEqual("New question");
-    expect(result.value?.question.content).toEqual("Question content");
-    expect(inMemoryQuestionsRepository.items[0]).toEqual(
-      result.value?.question,
+    expect(createdAnswer.authorId.toString()).toEqual(
+      new UniqueEntityID("author-1").toString(),
     );
+    expect(createdAnswer.content).toEqual("some content");
+    expect(createdAnswer.attachments.currentItems).toHaveLength(2);
+
+    expect(createdAnswer.attachments.currentItems).toEqual([
+      expect.objectContaining({
+        props: expect.objectContaining({
+          attachmentId: new UniqueEntityID("attachment1"),
+        }),
+      }),
+      expect.objectContaining({
+        props: expect.objectContaining({
+          attachmentId: new UniqueEntityID("attachment2"),
+        }),
+      }),
+    ]);
   });
 });
