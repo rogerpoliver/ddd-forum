@@ -1,6 +1,6 @@
-import { Entity } from "../../../../../core/entities/entity.ts";
-import { UniqueEntityID } from "../../../../../core/entities/unique-entity-id.ts";
-import { Optional } from "../../../../../core/types/optional.ts";
+import { Entity } from "../../../../core/entities/entity.ts";
+import { UniqueEntityID } from "../../../../core/entities/unique-entity-id.ts";
+import { Optional } from "../../../../core/types/optional.ts";
 
 interface NotificationProps {
   recipientId: UniqueEntityID;
