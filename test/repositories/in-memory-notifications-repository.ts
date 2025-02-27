@@ -9,4 +9,17 @@ export class InMemoryNotificationsRepository
     this.notifications.push(notification);
     return Promise.resolve();
   }
+
+  findById(id: string): Promise<Notification | null> {
+    const notification = this.notifications.find(
+      (notification) => notification.id.toString() === id,
+    );
+
+    return Promise.resolve(notification ?? null);
+  }
+
+  save(notification: Notification): Promise<void> {
+    this.notifications.push(notification);
+    return Promise.resolve();
+  }
 }
