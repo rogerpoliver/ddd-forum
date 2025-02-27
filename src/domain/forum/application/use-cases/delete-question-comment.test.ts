@@ -7,7 +7,7 @@ import {
 } from "../../../../../test/repositories/in-memory-questions-comments-repository.ts";
 import { UniqueEntityID } from "../../../../core/entities/unique-entity-id.ts";
 import { DeleteQuestionCommentUseCase } from "./delete-question-comment.ts";
-import { NotAllowedError } from "./errors/not-allowed-error.ts";
+import { NotAllowedError } from "../../../../core/errors/not-allowed-error.ts";
 
 let inMemoryQuestionsCommentsRepository: InMemoryQuestionsCommentsRepository;
 let sut: DeleteQuestionCommentUseCase;

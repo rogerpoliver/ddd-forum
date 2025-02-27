@@ -3,7 +3,7 @@ import { UniqueEntityID } from '../../../../core/entities/unique-entity-id.ts';
 import { AnswersComment } from '../../enterprise/entities/answer-comment.ts';
 import { AnswersCommentsRepository } from '../repositories/answers-comments-repository.ts';
 import { AnswersRepository } from '../repositories/answers-repository.ts';
-import { ResourceNotFoundError } from './errors/resource-not-found-error.ts';
+import { ResourceNotFoundError } from '../../../../core/errors/resource-not-found-error.ts';
 
 interface CommentOnAnswerUseCaseRequest {
   authorId: string;

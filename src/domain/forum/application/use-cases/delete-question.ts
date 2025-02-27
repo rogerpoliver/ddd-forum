@@ -1,7 +1,7 @@
 import { Either, left, right } from '../../../../core/either.ts';
 import { QuestionsRepository } from '../repositories/questions-repository.ts';
-import { NotAllowedError } from './errors/not-allowed-error.ts';
-import { ResourceNotFoundError } from './errors/resource-not-found-error.ts';
+import { NotAllowedError } from '../../../../core/errors/not-allowed-error.ts';
+import { ResourceNotFoundError } from '../../../../core/errors/resource-not-found-error.ts';
 
 interface DeleteQuestionUseCaseRequest {
     authorId: string;

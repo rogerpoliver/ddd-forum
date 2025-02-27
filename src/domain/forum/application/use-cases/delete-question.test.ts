@@ -11,7 +11,7 @@ import {
 } from "../../../../../test/repositories/in-memory-questions-repository.ts";
 import { UniqueEntityID } from "../../../../core/entities/unique-entity-id.ts";
 import { DeleteQuestionUseCase } from "./delete-question.ts";
-import { NotAllowedError } from "./errors/not-allowed-error.ts";
+import { NotAllowedError } from "../../../../core/errors/not-allowed-error.ts";
 
 let inMemoryQuestionsRepository: InMemoryQuestionsRepository;
 let inMemoryQuestionAttachmentsRepository:

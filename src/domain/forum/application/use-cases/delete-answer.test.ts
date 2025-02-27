@@ -11,8 +11,8 @@ import {
 } from "../../../../../test/repositories/in-memory-answers-repository.ts";
 import { UniqueEntityID } from "../../../../core/entities/unique-entity-id.ts";
 import { DeleteAnswerUseCase } from "./delete-answer.ts";
-import { NotAllowedError } from "./errors/not-allowed-error.ts";
-import { ResourceNotFoundError } from "./errors/resource-not-found-error.ts";
+import { NotAllowedError } from "../../../../core/errors/not-allowed-error.ts";
+import { ResourceNotFoundError } from "../../../../core/errors/resource-not-found-error.ts";
 
 let inMemoryAnswersRepository: InMemoryAnswersRepository;
 let inMemoryAnswerAttachmentsRepository: InMemoryAnswerAttachmentsRepository;

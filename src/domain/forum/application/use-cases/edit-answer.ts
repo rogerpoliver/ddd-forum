@@ -5,8 +5,8 @@ import { AnswerAttachmentsList } from "../../enterprise/entities/answer-attachme
 import { Answer } from "../../enterprise/entities/answer.ts";
 import { AnswerAttachmentsRepository } from "../repositories/answer-attachments-repository.ts";
 import { AnswersRepository } from "../repositories/answers-repository.ts";
-import { NotAllowedError } from "./errors/not-allowed-error.ts";
-import { ResourceNotFoundError } from "./errors/resource-not-found-error.ts";
+import { NotAllowedError } from "../../../../core/errors/not-allowed-error.ts";
+import { ResourceNotFoundError } from "../../../../core/errors/resource-not-found-error.ts";
 
 interface EditAnswerUseCaseRequest {
   authorId: string;

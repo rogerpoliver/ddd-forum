@@ -16,7 +16,7 @@ import {
   InMemoryQuestionsRepository,
 } from "../../../../../test/repositories/in-memory-questions-repository.ts";
 import { ChooseQuestionsBestAnswerUseCase } from "./choose-questions-best-answer.ts";
-import { NotAllowedError } from "./errors/not-allowed-error.ts";
+import { NotAllowedError } from "../../../../core/errors/not-allowed-error.ts";
 
 let inMemoryQuestionsRepository: InMemoryQuestionsRepository;
 let inMemoryAnswersRepository: InMemoryAnswersRepository;
