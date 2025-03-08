@@ -6,7 +6,7 @@
   "imports": {
     "@std/assert": "jsr:@std/assert",
     "@std/expect": "jsr:@std/expect",
-    "@std/testing": "jsr:@std/testing",
+    "@std/testing": "jsr:@std/testing@^1.0.9",
     "@xtool/dayjs": "jsr:@xtool/dayjs",
     "@faker-js/faker": "npm:@faker-js/faker"
   }
