@@ -5,6 +5,7 @@ import { Optional } from "../../../../core/types/optional.ts";
 import { AnswerAttachmentsList } from "./answer-attachments-list.ts";
 
 import type { UniqueEntityID } from "../../../../core/entities/unique-entity-id.ts";
+import { AnswerCreatedEvent } from "../events/answer-created.ts";
 export interface AnswerProps {
   authorId: UniqueEntityID;
   questionId: UniqueEntityID;
@@ -69,6 +70,13 @@ export class Answer extends AggregateRoot<AnswerProps> {
       createdAt: props.createdAt ?? new Date(),
       attachments: props.attachments ?? new AnswerAttachmentsList(),
     }, id);
+
+    const isNewAnswer = !id;
+
+    if (isNewAnswer) {
+      answer.addDomainEvent(new AnswerCreatedEvent(answer));
+    }
+
     return answer;
   }
 }
