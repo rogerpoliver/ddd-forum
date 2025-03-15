@@ -6,10 +6,11 @@ import { QuestionAttachmentsList } from "./question-attachments-list.ts";
 import { Slug } from "./value-objects/slug.ts";
 
 import type { UniqueEntityID } from "../../../../core/entities/unique-entity-id.ts";
+import { QuestionBestAnswerChosenEvent } from "../events/question-best-answer-chosen-event.ts";
 
 export interface QuestionProps {
   authorId: UniqueEntityID;
-  bestAnswerId: UniqueEntityID;
+  bestAnswerId?: UniqueEntityID;
   title: string;
   slug: Slug;
   content: string;
@@ -27,8 +28,22 @@ export class Question extends AggregateRoot<QuestionProps> {
     return this.props.bestAnswerId;
   }
 
-  set bestAnswerId(value: UniqueEntityID) {
-    this.props.bestAnswerId = value;
+  set bestAnswerId(bestAnswerId: UniqueEntityID | undefined) {
+    if (bestAnswerId === undefined) {
+      return;
+    }
+
+    if (
+      this.props.authorId === undefined ||
+      this.props.bestAnswerId === undefined ||
+      !bestAnswerId.equals(this.props.bestAnswerId)
+    ) {
+      this.addDomainEvent(
+        new QuestionBestAnswerChosenEvent(this, bestAnswerId),
+      );
+    }
+
+    this.props.bestAnswerId = bestAnswerId;
     this.touch();
   }
 

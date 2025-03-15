@@ -1,3 +1,4 @@
+import { DomainEvents } from "../../src/core/events/domain-events.ts";
 import { PaginationParams } from "../../src/core/repositories/pagination-params.ts";
 import {
   QuestionAttachmentsRepository,
@@ -16,6 +17,7 @@ export class InMemoryQuestionsRepository implements QuestionsRepository {
 
   create(question: Question): Promise<void> {
     this.items.push(question);
+    DomainEvents.dispatchEventsForAggregate(question.id);
     return Promise.resolve();
   }
 
@@ -60,8 +62,8 @@ export class InMemoryQuestionsRepository implements QuestionsRepository {
 
   save(question: Question): Promise<void> {
     const itemIndex = this.items.findIndex((item) => item.id == question.id);
-
     this.items[itemIndex] = question;
+    DomainEvents.dispatchEventsForAggregate(question.id);
     return Promise.resolve();
   }
 }
